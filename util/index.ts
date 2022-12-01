@@ -19,3 +19,6 @@ export const GeneratePIN = async (l?: number) => {
 
 }
 
+export const verifyPIN = async (PIN: string, HASH: string) => {
+    return await bcrypt.compare(PIN, HASH);
+}
