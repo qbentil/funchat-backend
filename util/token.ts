@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 const GenerateToken = (user: any) => {
     //   Create access token
     const access_token = jwt.sign(
-        { id: user._id, role: user.role },
+        { id: user._id, username: user.username },
         process.env.JWT_SECRET || "",
         {
             expiresIn: '1d' // 1 day
@@ -11,7 +11,7 @@ const GenerateToken = (user: any) => {
     );
     //   Create refresh token
     const refresh_token = jwt.sign(
-        { id: user._id, role: user.role },
+        { id: user._id, username: user.username },
         process.env.JWT_REFRESH_SECRET || "",
         {
             expiresIn: process.env.JWT_REFRESH_SECRET_EXPIRE || "30d" // 30 days
@@ -20,7 +20,7 @@ const GenerateToken = (user: any) => {
 
     //  Create reset token
     const reset_token = jwt.sign(
-        { id: user._id, role: user.role, email: user.email },
+        { id: user._id, username: user.username },
         process.env.JWT_SECRET || "",
         {
             expiresIn: process.env.JWT_SECRET_EXPIRE || "1h" // 1 hour
