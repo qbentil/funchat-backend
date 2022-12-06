@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { GeneratePIN } from "../util";
 import USER from "../models/user.model";
 import { verifyPIN } from './../util/index';
+import GenerateToken from "../util/token";
 
 export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -60,10 +61,22 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
         if (!isMatch) return next({ statusCode: 400, message: "Invalid credentials" });
 
+        // Generate Tokens
+        const {access_token, refresh_token} = GenerateToken(user);
+        
+        // update refresh token
+        await USER.findByIdAndUpdate(user._id, {token: refresh_token});
+
+        // append access_token to data
+        user.access_token = access_token;
+
+        // add refrsh token to cookie
+        res.cookie('refresh_token', refresh_token, {httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000, sameSite: 'none', secure: true});
+
         res.status(200).json({
             success: true,
-            data: user
-
+            data: user,
+            message: "Login successful"
         })
     } catch (error) {
         next(error);
