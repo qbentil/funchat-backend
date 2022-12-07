@@ -26,7 +26,7 @@ export const signUp = async (req: Request, res: Response, next: NextFunction) =>
         // check if the user already exists by email or username
         const exist = await USER.findOne({ $or: [{ email }, { username }] });
 
-        if (exist) return next({ statusCode: 400, message: "User already exists" });
+        if (exist) return next(CreateError("User already exists", 400));
 
         const password = await GeneratePIN()
         const user = await USER.create({
@@ -55,12 +55,12 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         // check if the user exists
         const user = await USER.findOne({ email });
 
-        if (!user) return next({ statusCode: 400, message: "User does not exist" });
+        if (!user) return next(CreateError("Invalid Credentials", 400));
 
         // check if the password is correct
         const isMatch = await verifyPIN(password, user.password);
 
-        if (!isMatch) return next({ statusCode: 400, message: "Invalid credentials" });
+        if (!isMatch) return next(CreateError("Invalid Credentials", 400));
 
         // Generate Tokens
         const { access_token, refresh_token } = GenerateToken(user);
