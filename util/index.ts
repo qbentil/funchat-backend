@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
  * @param l length of the PIN 
  * @returns  an object with the PIN and the hash
  */
-export const GeneratePIN = async (l?: number) => {
+export const GeneratePIN = async (l?: number): Promise<{ PIN: string; HASH: string; }> => {
     const len = l || 6;
     // generate a random number with len digits
     const random = Math.floor(Math.random() * Math.pow(10, len));
@@ -26,5 +26,5 @@ export const verifyPIN = async (PIN: string, HASH: string) => {
 
 export const sendMail = async (to: string, subject: string, html: string) => {
     // send email
-    
+
 }
