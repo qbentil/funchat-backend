@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
+
 import CreateError from "../util/Error";
+import jwt from "jsonwebtoken";
+
 declare module "express-serve-static-core" {
     interface Request {
         user: any;
