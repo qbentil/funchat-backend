@@ -42,11 +42,11 @@ export const VerifyRefreshToken = async(req: Request, res: Response, next: NextF
         const decoded:any = jwt.verify(token, process.env.JWT_REFRESH_SECRET || '')
         if(!decoded) return next(CreateError("Invalid Refresh Token", 401))
                 // check expiry
-                if (payload.exp < Date.now() / 1000) {
+                if (decoded.exp < Date.now() / 1000) {
                     return next(CreateError("Access token expired", 401))
                 }
         
-                req.user = payload;
+                req.user = decoded;
                 req.token = token;
                 next();
     }catch(e:any){
