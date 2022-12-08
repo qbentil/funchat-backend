@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
+
 import CreateError from "../util/Error";
+import jwt from "jsonwebtoken";
+
 declare module "express-serve-static-core" {
     interface Request {
         user: any;
@@ -26,4 +28,29 @@ export const VerifyAccessToken = async (req: Request, res: Response, next: NextF
     } catch (error) {
         next(error);
     }
+}
+
+export const VerifyRefreshToken = async (req: Request, res: Response, next: NextFunction) => {
+    const { authorization } = req.headers;
+
+    // Throw error if not Auth token
+    if (!authorization) return next(CreateError("Unauthorized Access to Refresh", 401))
+
+    const token: string = authorization.split(" ")[1];
+
+    try {
+        const decoded: any = jwt.verify(token, process.env.JWT_REFRESH_SECRET || '')
+        if (!decoded) return next(CreateError("Invalid Refresh Token", 401))
+        // check expiry
+        if (decoded.exp < Date.now() / 1000) {
+            return next(CreateError("Access token expired", 401))
+        }
+
+        req.user = decoded;
+        req.token = token;
+        next();
+    } catch (e: any) {
+        next(e)
+    }
+
 }
