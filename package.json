@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node ./dist/server.js",
-    "server": "nodemon server.ts",
+    "server": "nodemon --exec ts-node server.ts",
     "tsc": "./node_modules/typescript/bin/tsc",
     "build": "tsc"
   },
