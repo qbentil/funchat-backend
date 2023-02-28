@@ -1,11 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 
-import { GeneratePIN } from "../util";
-import USER from "../models/user.model";
-import { verifyPIN } from './../util/index';
-import GenerateToken from "../util/token";
 import CreateError from "../util/Error";
+import { GeneratePIN } from "../util";
+import GenerateToken from "../util/token";
+import USER from "../models/user.model";
 import jwt from "jsonwebtoken";
+import { verifyPIN } from './../util/index';
+
 export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
     try {
         // get all users
@@ -20,7 +21,7 @@ export const getUsers = async (req: Request, res: Response, next: NextFunction) 
 }
 
 export const signUp = async (req: Request, res: Response, next: NextFunction) => {
-    const { username, email } = req.body;
+    const { username, email, fullname, about } = req.body;
     try {
 
         // check if the user already exists by email or username
@@ -32,6 +33,8 @@ export const signUp = async (req: Request, res: Response, next: NextFunction) =>
         const user = await USER.create({
             username,
             email,
+            fullname,
+            about,
             password: password.HASH
         })
 
