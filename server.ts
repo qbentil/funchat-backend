@@ -15,8 +15,8 @@ APP.use("/user", userRouter)
 // Error Handler
 APP.use(ErrorHandler)
 
-APP.listen(PORT, () => {
+APP.listen(PORT, async() => {
     // connect to DB
-    DBCONNECT();
+    await DBCONNECT();
     console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`);
 })
