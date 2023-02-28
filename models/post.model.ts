@@ -26,4 +26,4 @@ const PostModel = new Schema({
     },
 }, {timestamps: true})
 
-export default mongoose.models.Post || mongoose.model<any, any>('Post', PostModel);
+export default mongoose.models['Post'] || mongoose.model<any, any>('Post', PostModel);
