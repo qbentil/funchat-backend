@@ -1,8 +1,9 @@
 import express, { Express, NextFunction, Request, Response } from "express";
-import dotenv from "dotenv";
+
 import DBCONNECT from "./db";
-import userRouter from "./routes/user.route";
 import ErrorHandler from "./middlewares/error";
+import dotenv from "dotenv";
+import userRouter from "./routes/user.route";
 
 dotenv.config();
 
