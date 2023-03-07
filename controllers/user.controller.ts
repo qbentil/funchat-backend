@@ -6,6 +6,7 @@ import GenerateToken from "../util/token";
 import USER from "../models/user.model";
 import jwt from "jsonwebtoken";
 import { verifyPIN } from './../util/index';
+import Axios from "../util/Axios";
 
 export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -118,5 +119,28 @@ export const GETREFRESHTOKEN = async (req: Request, res: Response, next: NextFun
 
     } catch (error) {
         next(error)
+    }
+}
+
+interface MailData {
+    receiver_email: string,
+    subject: string,
+    message: string,
+    sender_name?: string,
+    sender_email: string
+}
+const SEND_MAIL = async (mailData: MailData) => {
+    // make a call to externa api to send email using fetch 
+    // or axios
+    mailData.sender_name = "FunChat 🚀"
+    mailData.sender_email = "bentilshadrack72@gmail.com"
+    try {
+        const { data } = await Axios({
+            method: "POST",
+            url: "public/sendmail",
+            data: mailData
+        })
+    } catch (error) {
+        console.log("error >>>", error)
     }
 }
