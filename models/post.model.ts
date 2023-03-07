@@ -1,14 +1,11 @@
 import mongoose, {Schema} from 'mongoose'
 
 const PostModel = new Schema({
-    title: {
-        type: String,        
-    },
     image: {
         type: String,
         required: [true, 'Image is required'],
     },
-    description: {
+    caption: {
         type: String,
     },
     likes: {
