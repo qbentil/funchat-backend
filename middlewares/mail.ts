@@ -1,7 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import Axios from "../util/Axios";
 import axios from "axios";
-import { json } from "body-parser";
 
 declare module "express-serve-static-core" {
     interface Request {
@@ -25,19 +23,7 @@ export const sendMail = async (req: Request, res: Response, next: NextFunction) 
         `
     }
     try {
-        // send email
-        // const { data } = await Axios({
-        //     method: "POST",
-        //     url: "public/sendmail",
-        //     data: {
-        //         receiver_email: maildata.to,
-        //         subject: maildata.subject,
-        //         message: maildata.html,
-        //         sender_name:  "FunChat 🚀",
-        //         sender_email: "bentilshadrack72@gmail.com",
-        //     }
-        // })
-        const {data} = await axios.post("https://bentility-api.onrender.com/public/sendmail", {
+        const { data } = await axios.post("https://bentility-api.onrender.com/public/sendmail", {
             receiver_email: maildata.to,
             subject: maildata.subject,
             message: maildata.html,
