@@ -4,9 +4,10 @@
   "description": "Where developers have fun!",
   "main": "server.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/server.js",
-    "server": "nodemon --exec ts-node server.ts"
+    "start": "node ./dist/server.js",
+    "server": "nodemon --exec ts-node server.ts",
+    "tsc": "./node_modules/typescript/bin/tsc",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
