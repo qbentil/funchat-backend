@@ -9,7 +9,7 @@ import { verifyPIN } from '../util/index';
 
 
 export const signUp = async (req: Request, res: Response, next: NextFunction) => {
-    const { username, email, fullname, about } = req.body;
+    const { username, email} = req.body;
     try {
 
         // check if the user already exists by email or username
@@ -79,7 +79,6 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
         // add refrsh token to cookie
         res.cookie('refresh_token', refresh_token, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000, sameSite: 'none', secure: true });
-
         res.status(200).json({
             success: true,
             data: user,
