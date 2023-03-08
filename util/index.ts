@@ -1,4 +1,8 @@
 import bcrypt from "bcryptjs";
+import Axios from "./Axios";
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 /**
  * 
@@ -24,7 +28,4 @@ export const verifyPIN = async (PIN: string, HASH: string) => {
     return await bcrypt.compare(PIN, HASH);
 }
 
-export const sendMail = async (to: string, subject: string, html: string) => {
-    // send email
 
-}
