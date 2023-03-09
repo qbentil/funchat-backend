@@ -6,7 +6,7 @@
   "scripts": {
     "tsc": "./node_modules/typescript/bin/tsc",
     "build": "tsc",
-    "start": "node dist/server.js",
+    "start": "node build/server.js",
     "server": "nodemon --exec ts-node server.ts"
   },
   "repository": {
